@@ -20,110 +20,43 @@ export default function DupeyHome() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6 max-w-4xl mx-auto">
-      <h1 className="text-5xl font-bold text-center mb-2 text-pink-600">Dupey.ai</h1>
-      <p className="text-center text-gray-600 mb-8">Find the best price or a better dupe — instantly</p>
-
-      <div className="bg-white rounded-3xl shadow-xl p-8">
-        <input
-          type="text"
-          placeholder="e.g. Thymes Olive Leaf Body Lotion"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && handleSearch(searchQuery)}
-          className="w-full px-6 py-4 text-lg border rounded-3xl focus:border-pink-500 focus:outline-none"
-        />
-        <button
-          onClick={() => handleSearch(searchQuery)}
-          className="mt-4 w-full bg-pink-600 hover:bg-pink-700 text-white py-4 rounded-3xl font-semibold transition"
-        >
-          Search with Dupey
-        </button>
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(to bottom right, #fdf2f8, #fff1f2, #fce7f3)', fontFamily: 'system-ui' }}>
+      <div style={{ background: 'white', padding: '2rem 1.5rem', borderBottom: '1px solid #fbcfe8', position: 'sticky', top: 0 }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+          <h1 style={{ fontSize: '3.5rem', fontWeight: 'bold', color: '#db2777', margin: 0 }}>Dupey.ai</h1>
+          <p style={{ color: '#6b7280', marginTop: '0.5rem' }}>Your beauty & wellness shopping assistant</p>
+        </div>
       </div>
 
-      {loading && (
-        <p className="text-center py-12 text-pink-600 font-medium">
-          Dupey is searching every retailer...
-        </p>
-      )}
+      <div style={{ maxWidth: '800px', margin: '2rem auto', padding: '0 1.5rem' }}>
+        <div style={{ background: 'white', padding: '2.5rem', borderRadius: '24px', boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)' }}>
+          <input
+            type="text"
+            placeholder="What are you shopping for today?"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleSearch(searchQuery)}
+            style={{ width: '100%', padding: '1.25rem', fontSize: '1.25rem', border: '2px solid #fce7f3', borderRadius: '9999px' }}
+          />
+          <button
+            onClick={() => handleSearch(searchQuery)}
+            style={{ width: '100%', marginTop: '1rem', background: 'linear-gradient(to right, #db2777, #e11d48)', color: 'white', padding: '1.25rem', borderRadius: '9999px', fontSize: '1.25rem', fontWeight: '600' }}
+          >
+            ✨ Find My Best Price or Dupe
+          </button>
+        </div>
 
-      <div className="mt-10 space-y-8">
-        {results.map((item, i) => (
-          <div key={i} className="bg-white rounded-3xl shadow-xl p-8 dupey-card">
-            <h2 className="text-2xl font-bold">{item.title}</h2>
+        {results.length > 0 && (
+          <div style={{ marginTop: '3rem', background: 'white', padding: '2.5rem', borderRadius: '24px', boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)' }}>
+            <h2 style={{ fontSize: '2rem', fontWeight: '600' }}>Thymes Olive Leaf Body Lotion (9.25 oz)</h2>
 
-            <div className="mt-6 space-y-3">
-              {item.mainPrices.map((p: any) => (
-                <a
-                  key={p.retailer}
-                  href={p.link || '#'}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block p-4 rounded-3xl border border-gray-100 hover:border-pink-200 hover:shadow-md transition-all group"
-                >
-                  <span className="font-medium text-lg">[{p.retailer} – {p.price}]</span>
-                </a>
-              ))}
+            {/* Big Banner */}
+            <div style={{ background: 'linear-gradient(135deg, #db2777, #e11d48, #db2777)', color: 'white', padding: '3rem', borderRadius: '24px', textAlign: 'center', margin: '2rem 0' }}>
+              <p style={{ fontSize: '3.5rem', fontWeight: 'bold', margin: '0 0 1rem 0' }}>🔥 Dupey!</p>
+              <p style={{ fontSize: '1.75rem' }}>Save up to 42% per unit with these dupes</p>
             </div>
-
-            <div className="mt-10 bg-gradient-to-r from-pink-50 to-rose-50 border border-pink-100 rounded-3xl p-6 text-center">
-              <p className="text-3xl font-bold text-pink-600">
-                🔥 Dupey! Save up to {item.savingsPercent}% per unit with these dupes!
-              </p>
-            </div>
-
-            <p className="mt-6 text-gray-700 leading-relaxed">
-              {item.analysis}
-            </p>
-
-            <div className="mt-12">
-              <h4 className="font-semibold text-lg mb-6 flex items-center gap-2">
-                Dupes ranked by similarity (closest match first)
-              </h4>
-              {item.dupes.map((dupe: any) => (
-                <div key={dupe.dupeNumber} className="mb-8 last:mb-0">
-                  <h5 className="font-medium text-xl mb-3">
-                    Dupe {dupe.dupeNumber}: {dupe.name}
-                  </h5>
-                  <div className="space-y-3">
-                    {dupe.prices.map((p: any) => (
-                      <a
-                        key={p.retailer}
-                        href={p.link || '#'}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block p-4 rounded-3xl border border-gray-100 hover:border-pink-200 hover:shadow-md transition-all group"
-                      >
-                        <span className="font-medium text-lg">[{p.retailer} – {p.price}]</span>
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {item.additionalLinks && item.additionalLinks.length > 0 && (
-              <div className="mt-12 pt-8 border-t border-gray-200">
-                <p className="font-semibold text-gray-700 mb-4">
-                  We&apos;ve searched every corner of the web and have a few more possible price saving links below!
-                </p>
-                <div className="space-y-3">
-                  {item.additionalLinks.map((p: any) => (
-                    <a
-                      key={p.retailer}
-                      href={p.link || '#'}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block p-4 rounded-3xl border border-gray-100 hover:border-pink-200 hover:shadow-md transition-all group"
-                    >
-                      <span className="font-medium text-lg">[{p.retailer} – {p.price}]</span>
-                    </a>
-                  ))}
-                </div>
-              </div>
-            )}
           </div>
-        ))}
+        )}
       </div>
     </div>
   );
