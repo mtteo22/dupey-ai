@@ -20,9 +20,9 @@ export default function DupeyHome() {
   };
 
   return (
-    <div className="min-h-screen bg-white font-sans">
-      {/* Header - Logo + Tagline */}
-      <div className="pt-16 pb-12 text-center border-b">
+    <div className="min-h-screen bg-white">
+      {/* Header */}
+      <div className="pt-16 pb-10 text-center border-b border-gray-100">
         <img 
           src="/dupey-logo.png" 
           alt="Dupey.ai" 
@@ -33,11 +33,10 @@ export default function DupeyHome() {
         </p>
       </div>
 
-      {/* Clean Centered Search Bar */}
+      {/* Clean centered search bar */}
       <div className="max-w-xl mx-auto px-6 pt-12 pb-16">
         <div className="relative bg-white rounded-full shadow border border-gray-200 flex items-center px-6 py-5 hover:shadow-lg transition-all">
           <button className="mr-6 text-4xl text-pink-500 hover:text-pink-600 transition">📷</button>
-          
           <input
             type="text"
             placeholder="Thymes Olive Leaf Body Lotion, Olaplex No.3, CeraVe Moisturizing Cream..."
@@ -50,64 +49,15 @@ export default function DupeyHome() {
         <p className="text-center text-sm text-gray-500 mt-4">or tap the camera to search by photo</p>
       </div>
 
-      {loading && (
-        <p className="text-center text-xl text-pink-600 py-12">Dupey is searching every retailer for the best prices...</p>
-      )}
+      {loading && <p className="text-center py-12 text-xl text-pink-600">Dupey is searching every retailer for you...</p>}
 
-      {/* Search Results */}
-      <div className="max-w-4xl mx-auto px-6 pb-20">
-        {results.map((item, i) => (
-          <div key={i} className="mb-16 bg-white border border-gray-100 rounded-3xl shadow p-10">
-            <h2 className="text-3xl font-semibold mb-10">{item.title}</h2>
-
-            {/* Big 🔥 Dupey Banner */}
-            <div className="bg-gradient-to-r from-pink-600 to-rose-500 text-white rounded-3xl p-14 text-center mb-12">
-              <p className="text-5xl font-bold mb-4">🔥 Dupey!</p>
-              <p className="text-2xl">Save up to {item.savingsPercent}% per unit with these dupes</p>
-            </div>
-
-            {/* Prices */}
-            <div className="space-y-4 mb-12">
-              {item.mainPrices?.map((p: any) => (
-                <a
-                  key={p.retailer}
-                  href={p.link || '#'}
-                  target="_blank"
-                  className="block p-6 rounded-2xl border border-gray-200 hover:border-pink-400 hover:bg-pink-50 transition flex justify-between items-center text-lg"
-                >
-                  [{p.retailer} – {p.price}]
-                </a>
-              ))}
-            </div>
-
-            {/* Analysis */}
-            <div className="bg-gray-50 p-8 rounded-3xl mb-12 text-gray-700 leading-relaxed">
-              {item.analysis}
-            </div>
-
-            {/* Dupes */}
-            <div>
-              <h4 className="font-semibold text-xl mb-8">Dupes ranked by similarity (closest match first)</h4>
-              {item.dupes?.map((dupe: any) => (
-                <div key={dupe.dupeNumber} className="mb-10">
-                  <h5 className="font-medium text-lg mb-4">Dupe {dupe.dupeNumber}: {dupe.name}</h5>
-                  <div className="space-y-3">
-                    {dupe.prices?.map((p: any) => (
-                      <a
-                        key={p.retailer}
-                        href={p.link || '#'}
-                        target="_blank"
-                        className="block p-6 rounded-2xl border border-gray-200 hover:border-pink-400 hover:bg-pink-50 transition"
-                      >
-                        [{p.retailer} – {p.price}]
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
+      {/* Results area - will populate when you search */}
+      <div className="max-w-4xl mx-auto px-6">
+        {results.length > 0 && (
+          <div className="text-center text-gray-400 py-12">
+            Search results will appear here (full layout coming in next batch)
           </div>
-        ))}
+        )}
       </div>
     </div>
   );
